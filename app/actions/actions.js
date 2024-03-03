@@ -2,6 +2,7 @@
 
 import { Client } from 'square'
 import { randomUUID } from 'crypto'
+import serverProducts from '@/public/products.json'
 
 BigInt.prototype.toJSON = function () {
   return this.toString()
@@ -14,12 +15,15 @@ const { paymentsApi } = new Client({
 
 export async function submitPayment(sourceId, product) {
   try {
+    const serverProduct = serverProducts.list.find(
+      (serverProduct) => serverProduct.id === product.id
+    )
     const { result } = await paymentsApi.createPayment({
       idempotencyKey: randomUUID(),
       sourceId,
       amountMoney: {
         currency: 'USD',
-        amount: product.price
+        amount: serverProduct.price
       }
     })
     return result
