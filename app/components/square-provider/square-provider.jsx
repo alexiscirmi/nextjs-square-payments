@@ -16,17 +16,19 @@ export default function SquareProvider({ product }) {
       id='provider-container'
       className='mt-10 flex flex-col justify-center items-center gap-5 w-full'
     >
-      <PaymentForm
-        applicationId={appId}
-        locationId={locationId}
-        cardTokenizeResponseReceived={async (token) => {
-          const result = await submitPayment(token.token, product)
-          console.log(result)
-          setPaymentStatus(result)
-        }}
-      >
-        <CreditCard />
-      </PaymentForm>
+      <div className='min-h-48'>
+        <PaymentForm
+          applicationId={appId}
+          locationId={locationId}
+          cardTokenizeResponseReceived={async (token) => {
+            const result = await submitPayment(token.token, product)
+            console.log(result)
+            setPaymentStatus(result)
+          }}
+        >
+          <CreditCard />
+        </PaymentForm>
+      </div>
       <PaymentStatus paymentStatus={paymentStatus} />
     </div>
   )
